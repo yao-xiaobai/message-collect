@@ -43,10 +43,11 @@ func (h EurGroupHandler) ConsumeClaim(session sarama.ConsumerGroupSession, claim
 		if err1 != nil {
 			return err
 		}
-		err3 := SendMsg(&eurBuild)
+		err3 := SendMsg("eur_build_event", &eurBuild)
 		if err3 != nil {
 			return err3
 		}
+		session.MarkMessage(message, "")
 	}
 
 	return nil

@@ -10,7 +10,7 @@ func Consume() {
 		Topic:   "eur_build_raw",
 		Address: "0.0.0.0:9092",
 		Group:   "ssp_test",
-		Offset:  sarama.OffsetOldest,
+		Offset:  sarama.OffsetNewest,
 	}
 
 	h := messageadapter.EurGroupHandler{}

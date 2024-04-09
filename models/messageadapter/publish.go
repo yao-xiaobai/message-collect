@@ -14,8 +14,8 @@ import (
 // sendMsg is a method on the messageAdapter struct that takes an EventMessage
 // and sends it to the ModelCreate topic.
 
-func SendMsg(e message.EventMessage) error {
-	return send("eur_build_event", e)
+func SendMsg(topic string, e message.EventMessage) error {
+	return send(topic, e)
 }
 
 func send(topic string, v message.EventMessage) error {

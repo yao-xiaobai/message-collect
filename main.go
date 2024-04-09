@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/opensourceways/server-common-lib/logrusutil"
 	liboptions "github.com/opensourceways/server-common-lib/options"
 	"github.com/sirupsen/logrus"
@@ -10,6 +11,10 @@ import (
 	"message-collect/models/domain/event"
 	"message-collect/models/messageadapter"
 	"message-collect/service/collector"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
 type options struct {
@@ -37,6 +42,10 @@ func gatherOptions(fs *flag.FlagSet, args ...string) (options, error) {
 }
 
 func main() {
+
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, os.Interrupt, syscall.SIGTERM)
+
 	logrusutil.ComponentInit("messageAdapter-collect")
 	log := logrus.NewEntry(logrus.StandardLogger())
 
@@ -47,14 +56,24 @@ func main() {
 		return
 	}
 	defer kafka.Exit()
-	publish()
-	//publish()
-	collector.Consume()
+	go func() {
+		for i := 0; i < 100; i++ {
+			time.Sleep(time.Second * 5)
+			publish()
+			fmt.Println("发送一条新消息")
+		}
+	}()
+
+	go func() {
+		collector.Consume()
+	}()
+	<-sig
+
 }
 
 func publish() {
 	e := event.NewEurBuildEvent()
-	if err1 := messageadapter.SendMsg(&e); err1 != nil {
+	if err1 := messageadapter.SendMsg("eur_build_raw", &e); err1 != nil {
 		logrus.Errorf("")
 	}
 }
