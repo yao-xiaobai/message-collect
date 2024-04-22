@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type EurBuild struct {
+type EurBuildRaw struct {
 	Body struct {
 		Build   int    `json:"build"`
 		Chroot  string `json:"chroot"`
@@ -32,44 +32,44 @@ type EurBuild struct {
 	Topic string      `json:"topic"`
 }
 
-func NewEurBuildEvent() EurBuild {
+func NewEurBuildRaw() EurBuildRaw {
 	EurBuildJSON := `{
   "body": {
-    "build": 7279434,
-    "chroot": "fedora-39-x86_64",
-    "copr": "cran",
-    "ip": "2620:52:3:1:dead:beef:cafe:c156",
-    "owner": "iucar",
-    "pid": 1961158,
-    "pkg": "R-CRAN-shortIRT",
-    "status": 3,
-    "user": "iucar",
-    "version": "0.1.3-1.copr7279434",
-    "what": "build start: user:iucar copr:cran pkg:R-CRAN-shortIRT build:7279434 ip:2620:52:3:1:dead:beef:cafe:c156 pid:1961158",
-    "who": "backend.worker-rpm_build_worker:7279434-fedora-39-x86_64"
+    "build": 93853,
+    "chroot": "openeuler-22.03_LTS-x86_64",
+    "copr": "libsys",
+    "ip": "169.59.160.68",
+    "owner": "fundawang",
+    "pid": 3601173,
+    "pkg": "bluechi",
+    "status": 1,
+    "user": "fundawang",
+    "version": "0.8.0-0.202404120704.git77f8733",
+    "what": "build end: user:packit copr:eclipse-bluechi-bluechi-872 build:7301454 pkg:bluechi version:0.8.0-0.202404120704.git77f8733 ip:169.59.160.68 pid:3601173 status:1",
+    "who": "backend.worker-rpm_build_worker:7301454-fedora-rawhide-s390x"
   },
   "headers": {
-    "fedora_messaging_schema": "copr.build.start",
+    "fedora_messaging_schema": "copr.build.end",
     "fedora_messaging_severity": 20,
-    "fedora_messaging_user_iucar": true,
+    "fedora_messaging_user_packit": true,
     "priority": 0,
-    "sent-at": "2024-04-09T07:44:31+00:00"
+    "sent-at": "2024-04-12T07:07:51+00:00"
   },
-  "id": "d4b3c30c-c7f4-454a-ab0b-def09796bd90",
+  "id": "243634a7-aa46-4c53-b669-f9d8366eb350",
   "queue": null,
-  "topic": "org.fedoraproject.prod.copr.build.start"
+  "topic": "org.fedoraproject.prod.copr.build.end"
 }`
 
-	var eurBuild EurBuild
+	var raw EurBuildRaw
 
-	err := json.Unmarshal([]byte(EurBuildJSON), &eurBuild)
+	err := json.Unmarshal([]byte(EurBuildJSON), &raw)
 	if err != nil {
-		return EurBuild{}
+		return EurBuildRaw{}
 	}
 
-	return eurBuild
+	return raw
 }
 
-func (e *EurBuild) Message() ([]byte, error) {
+func (e *EurBuildRaw) Message() ([]byte, error) {
 	return json.Marshal(e)
 }

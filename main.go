@@ -57,7 +57,7 @@ func main() {
 	}
 	defer kafka.Exit()
 	go func() {
-		for i := 0; i < 100; i++ {
+		for i := 0; i < 1; i++ {
 			time.Sleep(time.Second * 5)
 			publish()
 			fmt.Println("发送一条新消息")
@@ -72,8 +72,8 @@ func main() {
 }
 
 func publish() {
-	e := event.NewEurBuildEvent()
-	if err1 := messageadapter.SendMsg("eur_build_raw", &e); err1 != nil {
+	e := event.NewEurBuildRaw()
+	if err1 := messageadapter.SendMsg("eur_build_log", &e); err1 != nil {
 		logrus.Errorf("")
 	}
 }

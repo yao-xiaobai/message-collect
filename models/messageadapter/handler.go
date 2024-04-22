@@ -37,13 +37,13 @@ func (h EurGroupHandler) ConsumeClaim(session sarama.ConsumerGroupSession, claim
 		if err != nil {
 			return err
 		}
-		var eurBuild event.EurBuild
+		var eurBuild event.EurBuildRaw
 
 		err1 := json.Unmarshal(msg.Body, &eurBuild)
 		if err1 != nil {
 			return err
 		}
-		err3 := SendMsg("eur_build_event", &eurBuild)
+		err3 := SendMsg("eur_build_raw", &eurBuild)
 		if err3 != nil {
 			return err3
 		}

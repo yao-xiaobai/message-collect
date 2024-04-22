@@ -7,7 +7,7 @@ import (
 
 func Consume() {
 	cfg := messageadapter.ConsumeConfig{
-		Topic:   "eur_build_raw",
+		Topic:   "eur_build_log",
 		Address: "0.0.0.0:9092",
 		Group:   "ssp_test",
 		Offset:  sarama.OffsetNewest,
