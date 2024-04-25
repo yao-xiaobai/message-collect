@@ -1,15 +1,32 @@
 package main
 
 import (
-	"message-collect/common/script"
-	"sync"
+	"fmt"
+	"github.com/bamzi/jobrunner"
+	"github.com/go-redsync/redsync/v4"
+	redislock "message-collect/common/redis"
+	"message-collect/job"
+	"time"
 )
 
 func main() {
-	// 创建一个通道来通知任务完成
-	var wg sync.WaitGroup
-	wg.Add(1)
-	// 异步执行脚本
-	go script.ExecuteScript("script/fedora-messaging/consume_msg.bash", &wg)
-	wg.Wait()
+	redislock.Init()
+	jobrunner.Start() // optional: jobrunner.Start(pool int, concurrent int) (10, 1)
+	fmt.Println("Main goroutine continues")
+	startFedoraMsg()
+	select {}
+
+}
+
+func startFedoraMsg() {
+	mutex := redislock.RS.NewMutex("fed-msg", redsync.WithExpiry(time.Second*60))
+	err := mutex.Lock()
+	if err != nil {
+		fmt.Println("Failed to acquire lock:", err)
+		return
+	}
+	jobrunner.Now(
+		job.FedoraMsg{},
+	)
+	// 主goroutine继续执行其他操作
 }

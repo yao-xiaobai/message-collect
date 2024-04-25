@@ -4,16 +4,24 @@ go 1.22
 
 require (
 	github.com/IBM/sarama v1.43.1
+	github.com/bamzi/jobrunner v1.0.0
+	github.com/go-redsync/redsync/v4 v4.13.0
+	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/opensourceways/kafka-lib v0.0.0-20231114071554-b2af9944cf3a
+	github.com/redis/go-redis/v9 v9.5.1
 	sigs.k8s.io/yaml v1.4.0
 
 )
 
 require (
+	github.com/bsm/redislock v0.9.4 // indirect
+	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/eapache/go-resiliency v1.6.0 // indirect
 	github.com/eapache/go-xerial-snappy v0.0.0-20230731223053-c322873962e3 // indirect
 	github.com/eapache/queue v1.1.0 // indirect
+	github.com/go-redsync/redsync v1.4.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
@@ -30,6 +38,7 @@ require (
 	github.com/opensourceways/server-common-lib v0.0.0-20240325033300-a9187b20647e // indirect
 	github.com/pierrec/lz4/v4 v4.1.21 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
+	github.com/robfig/cron/v3 v3.0.0 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect
