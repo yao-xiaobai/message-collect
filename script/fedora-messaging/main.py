@@ -36,14 +36,7 @@ def json_marshal(obj):
 
 
 def print_eur_message(message):
-    # all eur related messages https://apps.fedoraproject.org/datagrepper/raw?category=copr
-    if message.topic == "org.fedoraproject.prod.copr.build.end" or message.topic == "org.fedoraproject.prod.copr.build.start":
-        print("******** Received eur event: ********\n")
-        print(message)
-
-        producer.send(topic, json_marshal(message))
-    else:
-        print("******** Message is not triggered by eur, skipped ********")
-
+    print("******** Received eur event: ********\n")
+    producer.send(topic, json_marshal(message))
 
 api.consume(lambda message: print_eur_message(message))

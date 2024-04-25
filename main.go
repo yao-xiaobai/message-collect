@@ -10,6 +10,6 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	// 异步执行脚本
-	go script.ExecuteScript("fedora-messaging/consume_msg.bash", &wg)
+	go script.ExecuteScript("script/fedora-messaging/consume_msg.bash", &wg)
 	wg.Wait()
 }
