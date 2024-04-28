@@ -1,1 +1,1 @@
-FEDORA_MESSAGING_CONF=/Users/shishupei/go/awesomeProject/fedora-messaging/config.toml python3 /Users/shishupei/go/awesomeProject/fedora-messaging/main.py
+FEDORA_MESSAGING_CONF=/Users/shishupei/go/message-collect/script/fedora-messaging/config.toml python3 /Users/shishupei/go/message-collect/script/fedora-messaging/main.py

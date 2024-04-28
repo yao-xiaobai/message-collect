@@ -6,9 +6,9 @@ amqp_url = "amqps://fedora:@rabbitmq.fedoraproject.org/%2Fpublic_pubsub"
 callback = "transfer.my_callback"
 
 [tls]
-ca_cert = "/Users/shishupei/go/awesomeProject/fedora-messaging/certs/cacert.pem"
-keyfile = "/Users/shishupei/go/awesomeProject/fedora-messaging/certs/fedora-key.pem"
-certfile = "/Users/shishupei/go/awesomeProject/fedora-messaging/certs/fedora-cert.pem"
+ca_cert = "/Users/shishupei/go/message-collect/script/fedora-messaging/certs/cacert.pem"
+keyfile = "/Users/shishupei/go/message-collect/script/fedora-messaging/certs/fedora-key.pem"
+certfile = "/Users/shishupei/go/message-collect/script/fedora-messaging/certs/fedora-cert.pem"
 #ca_cert = "/etc/fedora-messaging/cacert.pem"
 #keyfile = "/etc/fedora-messaging/fedora-key.pem"
 #certfile = "/etc/fedora-messaging/fedora-cert.pem"

@@ -1,10 +1,8 @@
 import json
 from dataclasses import dataclass
-from typing import Dict
-
 from fedora_messaging import api, config
-
 from kafka import KafkaProducer
+from typing import Dict
 
 
 @dataclass
@@ -15,7 +13,7 @@ class Event:
 
 
 # 创建生产者
-producer = KafkaProducer(bootstrap_servers='7.250.74.126:9092', api_version=(2, 8, 1))
+producer = KafkaProducer(bootstrap_servers='7.250.74.111:9092', api_version=(2, 8, 1))
 
 # Kafka 主题
 topic = 'eur_build_raw'
@@ -38,5 +36,6 @@ def json_marshal(obj):
 def print_eur_message(message):
     print("******** Received eur event: ********\n")
     producer.send(topic, json_marshal(message))
+
 
 api.consume(lambda message: print_eur_message(message))

@@ -12,7 +12,7 @@ type FedoraMsg struct {
 func (e FedoraMsg) Run() {
 	resultCh := make(chan string)
 	fmt.Println("启动fedora-messaging消费脚本")
-	go script.ExecuteScript("script/fedora-messaging/consume_msg.bash")
+	script.ExecuteScript("script/fedora-messaging/consume_msg.bash")
 	// Release the lock so other processes or threads can obtain a lock.
 	<-resultCh
 }

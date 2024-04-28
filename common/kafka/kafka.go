@@ -1,35 +1,63 @@
-/*
-Copyright (c) Huawei Technologies Co., Ltd. 2023. All rights reserved
-*/
-
-// Package kafka provides functionality for interacting with Kafka.
 package kafka
 
 import (
-	kfklib "github.com/opensourceways/kafka-lib/agent"
-	"github.com/opensourceways/kafka-lib/mq"
+	"encoding/json"
+	"github.com/IBM/sarama"
+	"log"
 )
 
-const (
-	deaultVersion = "2.1.0"
+var (
+	KfkProducer *KafkaProducer
 )
 
-// Exit is an exported variable that provides the exit function for the Kafka package.
-var Exit = kfklib.Exit
-
-// Config represents the configuration for Kafka.
-type Config struct {
-	kfklib.Config
+// KafkaProducer 封装了 Kafka 生产者的功能
+type KafkaProducer struct {
+	producer sarama.SyncProducer
 }
 
-// SetDefault sets the default values for the Config.
-func (cfg *Config) SetDefault() {
-	if cfg.Version == "" {
-		cfg.Version = deaultVersion
+func Init() {
+	brokers := []string{"127.0.0.1:9092"}
+	KfkProducer = NewKafkaProducer(brokers)
+}
+
+// NewKafkaProducer 创建一个新的 Kafka 生产者
+func NewKafkaProducer(brokerList []string) *KafkaProducer {
+	config := sarama.NewConfig()
+	config.Producer.RequiredAcks = sarama.WaitForAll
+	config.Producer.Retry.Max = 5
+	config.Producer.Return.Successes = true
+
+	producer, err := sarama.NewSyncProducer(brokerList, config)
+	if err != nil {
+		return nil
+	}
+
+	return &KafkaProducer{
+		producer: producer,
 	}
 }
 
-// Init initializes the Kafka agent with the specified configuration, logger, and removeCfg flag.
-func Init(cfg *Config, log mq.Logger, removeCfg bool) error {
-	return kfklib.Init(&cfg.Config, log, nil, "", removeCfg)
+// SendMessage 发送消息到指定的主题
+func (kp *KafkaProducer) SendMessage(topic string, message interface{}) error {
+	// 创建要发送的消息
+	jsonBytes, err := json.Marshal(message)
+	msg := &sarama.ProducerMessage{
+		Topic: topic,
+		Value: sarama.ByteEncoder(jsonBytes),
+	}
+
+	// 发送消息并处理结果
+	_, _, err = kp.producer.SendMessage(msg)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Close 关闭 Kafka 生产者连接
+func (kp *KafkaProducer) Close() {
+	if err := kp.producer.Close(); err != nil {
+		log.Printf("Error closing Kafka producer: %v\n", err)
+	}
 }
