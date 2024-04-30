@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b7b2b4a6-36db-44fb-afa2-9b30bda08a12" name="Changes" comment="support collect gitee webhook">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manager/scriptPluginManager.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manager/webServerPluginManager.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plugin/eurBuildPlugin.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pluginTemplate/mqPlugin/KafkaPlugin.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pluginTemplate/scriptPlugin/scriptPlugin.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pluginTemplate/webServerPlugin/webServerPlugin.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plugin_config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/kafka/kafka.go" beforeDir="false" afterPath="$PROJECT_DIR$/common/kafka/kafka.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/script/script.go" beforeDir="false" afterPath="$PROJECT_DIR$/pluginTemplate/scriptPlugin/script.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/job/eur.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/domain/event/EurBuildEnd.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/message/msg.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/messageadapter/config.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/messageadapter/consume.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/messageadapter/handler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/messageadapter/publish.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/server/gitee.go" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/models/gitee.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script/fedora-messaging/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/script/fedora-messaging/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script/script.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/gin.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/gitee/gitee.go" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/giteeServerPlugin.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file:///usr/local/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="ssp_dev" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../pkg/mod/github.com/go-redsync/redsync/v4@v4.13.0/mutex.go" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/../pkg/mod/github.com/go-redsync/redsync/v4@v4.13.0/redsync.go" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/../pkg/mod/github.com/robfig/cron/v3@v3.0.0/cron.go" root0="SKIP_INSPECTION" />
+    <setting file="file:///usr/local/go/src/runtime/panic.go" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2fZZ0n8HcmmWDNdvu3FFaHwBEmu" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "Go Build.go build message-collect.executor": "Debug",
+    "Go Build.go build message-collect/common/script.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.automatic.dependencies.download": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "/Users/shishupei",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/plugin/webserverPlugin" />
+      <recent name="$PROJECT_DIR$/common" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/pluginTemplate/mqPlugin" />
+      <recent name="$PROJECT_DIR$/plugin" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/plugin/webserverPlugin/models" />
+      <recent name="$PROJECT_DIR$/plugin/scriptPlugin" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build message-collect">
+    <configuration name="go build message-collect" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="message-collect" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="message-collect" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build message-collect/common/script" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="message-collect" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="message-collect/common/script" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/common/script/script.go" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build message-collect" />
+        <item itemvalue="Go Build.go build message-collect/common/script" />
+        <item itemvalue="Go Build.go build message-collect/common/script" />
+        <item itemvalue="Go Build.go build message-collect" />
+        <item itemvalue="Go Build.go build message-collect" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-gosdk-33c477a475b1-b97fc8a1e17c-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-241.14494.238" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-GO-241.14494.238" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="支持fedmsg" />
+    <MESSAGE value="use job runner do job" />
+    <MESSAGE value="support collect gitee webhook" />
+    <option name="LAST_COMMIT_MESSAGE" value="support collect gitee webhook" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/../pkg/mod/github.com/opensourceways/kafka-lib@v0.0.0-20231114071554-b2af9944cf3a/agent/publish.go</url>
+          <line>32</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/server/gitee/gitee.go</url>
+          <line>27</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/common/kafka/kafka.go</url>
+          <line>30</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/common/kafka/kafka.go</url>
+          <line>34</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/plugin/giteeServerPlugin.go</url>
+          <line>15</line>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/main.go</url>
+          <line>17</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/common/kafka/kafka.go</url>
+          <line>53</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="DlvErrorBreakpoint" />
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/message_collect$main.coverage" NAME="main Coverage Results" MODIFIED="1713946450820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test_environment/fed_msg" />
+  </component>
+</project>

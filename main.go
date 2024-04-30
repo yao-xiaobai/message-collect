@@ -2,18 +2,19 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"message-collect/common/kafka"
-	redislock "message-collect/common/redis"
-	"message-collect/script"
-	"message-collect/server"
+	"message-collect/manager"
+	"message-collect/plugin"
 )
 
 func main() {
-	redislock.Init()
 	kafka.Init()
+	engine := gin.Default()
 
-	fmt.Println("Main goroutine continues")
-	script.StartScript()
-	server.StartWebServer(8081)
+	manager.AddRoute(plugin.GiteeServerPlugin{Engine: engine})
+	manager.StartTask(plugin.EurBuildPlugin{})
+
+	engine.Run(fmt.Sprintf(":%d", 8081))
 	select {}
 }

@@ -13,7 +13,7 @@ class Event:
 
 
 # 创建生产者
-producer = KafkaProducer(bootstrap_servers='7.250.74.111:9092', api_version=(2, 8, 1))
+producer = KafkaProducer(bootstrap_servers='7.250.74.210:9092', api_version=(2, 8, 1))
 
 # Kafka 主题
 topic = 'eur_build_raw'

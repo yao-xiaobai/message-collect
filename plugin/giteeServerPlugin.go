@@ -1,16 +1,19 @@
-package gitee
+package plugin
 
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"message-collect/common/kafka"
-	serverModels "message-collect/models/server"
+	serverModels "message-collect/plugin/models"
 	"net/http"
 )
 
-func CommentWebhook(engine *gin.Engine) {
-	// Webhook 接口
-	engine.POST("/webhook/gitee/comment", handleComment)
+type GiteeServerPlugin struct {
+	Engine *gin.Engine
+}
+
+func (p GiteeServerPlugin) AddRoute() {
+	p.Engine.POST("/webhook/gitee/comment", handleComment)
 }
 
 func handleComment(c *gin.Context) {

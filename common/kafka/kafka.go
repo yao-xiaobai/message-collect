@@ -51,7 +51,6 @@ func (kp *KafkaProducer) SendMessage(topic string, message interface{}) error {
 	if err != nil {
 		return err
 	}
-
 	return nil
 }
 
