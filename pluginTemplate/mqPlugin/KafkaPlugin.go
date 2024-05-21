@@ -1,5 +1,5 @@
 package mqPlugin
 
-type ScriptPlugin interface {
+type MqPlugin interface {
 	StartConsume()
 }

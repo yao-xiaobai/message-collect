@@ -13,7 +13,9 @@ func main() {
 	engine := gin.Default()
 
 	manager.AddRoute(plugin.GiteeServerPlugin{Engine: engine})
-	manager.StartTask(plugin.EurBuildPlugin{})
+	go func() {
+		manager.StartConsume(plugin.EurBuildPlugin{})
+	}()
 
 	engine.Run(fmt.Sprintf(":%d", 8081))
 	select {}

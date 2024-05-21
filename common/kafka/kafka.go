@@ -1,7 +1,6 @@
 package kafka
 
 import (
-	"encoding/json"
 	"github.com/IBM/sarama"
 	"log"
 )
@@ -16,7 +15,7 @@ type KafkaProducer struct {
 }
 
 func Init() {
-	brokers := []string{"127.0.0.1:9092"}
+	brokers := []string{"182.160.6.195:9094"}
 	KfkProducer = NewKafkaProducer(brokers)
 }
 
@@ -38,16 +37,15 @@ func NewKafkaProducer(brokerList []string) *KafkaProducer {
 }
 
 // SendMessage 发送消息到指定的主题
-func (kp *KafkaProducer) SendMessage(topic string, message interface{}) error {
+func (kp *KafkaProducer) SendMessage(topic string, message []byte) error {
 	// 创建要发送的消息
-	jsonBytes, err := json.Marshal(message)
 	msg := &sarama.ProducerMessage{
 		Topic: topic,
-		Value: sarama.ByteEncoder(jsonBytes),
+		Value: sarama.ByteEncoder(message),
 	}
 
 	// 发送消息并处理结果
-	_, _, err = kp.producer.SendMessage(msg)
+	_, _, err := kp.producer.SendMessage(msg)
 	if err != nil {
 		return err
 	}

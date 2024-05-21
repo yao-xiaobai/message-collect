@@ -1,6 +1,7 @@
 package plugin
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"message-collect/common/kafka"
@@ -28,7 +29,8 @@ func handleComment(c *gin.Context) {
 	fmt.Println("Action:", payload.HookName)
 	fmt.Println("Comment ID:", payload.Comment.ID)
 	fmt.Println("Comment Body:", payload.Comment.Body)
-	kafka.KfkProducer.SendMessage("gitee_comment_raw", payload)
+	msg, _ := json.Marshal(payload)
+	kafka.KfkProducer.SendMessage("gitee_comment_raw", msg)
 
 	// 返回成功响应
 	c.JSON(http.StatusOK, gin.H{"message": "Webhook received successfully"})
