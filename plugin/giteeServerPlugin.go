@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"message-collect/common/kafka"
-	serverModels "message-collect/plugin/models"
+	"github.com/opensourceways/message-collect/common/kafka"
+	serverModels "github.com/opensourceways/message-collect/plugin/models"
 	"net/http"
 )
 

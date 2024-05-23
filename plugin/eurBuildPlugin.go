@@ -2,7 +2,7 @@ package plugin
 
 import (
 	"github.com/IBM/sarama"
-	"message-collect/common/kafka"
+	"github.com/opensourceways/message-collect/common/kafka"
 )
 
 type EurBuildPlugin struct {
@@ -12,8 +12,8 @@ func (p EurBuildPlugin) StartConsume() {
 	cfg := kafka.ConsumeConfig{
 		Topic:   "test_message_center",
 		Address: "182.160.6.195:9094",
-		Group:   "ssp_test",
-		Offset:  sarama.OffsetOldest,
+		Group:   "message-collect",
+		Offset:  sarama.OffsetNewest,
 	}
 
 	h := EurGroupHandler{}

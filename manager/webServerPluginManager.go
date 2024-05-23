@@ -3,7 +3,7 @@ package manager
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"message-collect/pluginTemplate/webServerPlugin"
+	"github.com/opensourceways/message-collect/pluginTemplate/webServerPlugin"
 )
 
 var (

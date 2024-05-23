@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"message-collect/common/kafka"
-	"message-collect/manager"
-	"message-collect/plugin"
+	"github.com/opensourceways/message-collect/common/kafka"
+	"github.com/opensourceways/message-collect/manager"
+	"github.com/opensourceways/message-collect/plugin"
 )
 
 func main() {

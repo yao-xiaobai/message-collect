@@ -1,16 +1,12 @@
-module message-collect
+module github.com/opensourceways/message-collect
 
 go 1.22
 
 require (
 	github.com/IBM/sarama v1.43.1
-	github.com/bamzi/jobrunner v1.0.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-redsync/redsync/v4 v4.13.0
-	github.com/opensourceways/kafka-lib v0.0.0-20231114071554-b2af9944cf3a
-	github.com/opensourceways/server-common-lib v0.0.0-20240325033300-a9187b20647e
 	github.com/redis/go-redis/v9 v9.5.1
-	github.com/sirupsen/logrus v1.9.3
 	sigs.k8s.io/yaml v1.4.0
 
 )

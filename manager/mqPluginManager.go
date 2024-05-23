@@ -1,7 +1,7 @@
 package manager
 
 import (
-	"message-collect/pluginTemplate/MqPlugin"
+	"github.com/opensourceways/message-collect/pluginTemplate/mqPlugin"
 	"reflect"
 )
 
