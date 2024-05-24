@@ -1,23 +1,23 @@
 package plugin
 
 import (
+	"fmt"
 	"github.com/IBM/sarama"
 	"github.com/opensourceways/message-collect/common/kafka"
+	"github.com/opensourceways/message-collect/utils"
 )
 
 type EurBuildPlugin struct {
 }
 
 func (p EurBuildPlugin) StartConsume() {
-	cfg := kafka.ConsumeConfig{
-		Topic:   "test_message_center",
-		Address: "182.160.6.195:9094",
-		Group:   "message-collect",
-		Offset:  sarama.OffsetNewest,
+	cfg := new(kafka.ConsumeConfig)
+	if err := utils.LoadFromYaml("config/eur_build_conf.yaml", cfg); err != nil {
+		fmt.Println("Config初始化失败, err:", err)
+		return
 	}
-
 	h := EurGroupHandler{}
-	kafka.ConsumeGroup(cfg, &h)
+	kafka.ConsumeGroup(*cfg, &h)
 }
 
 type EurGroupHandler struct{}

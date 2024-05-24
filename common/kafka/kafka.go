@@ -2,6 +2,7 @@ package kafka
 
 import (
 	"github.com/IBM/sarama"
+	"github.com/opensourceways/message-collect/config"
 	"log"
 )
 
@@ -14,8 +15,8 @@ type KafkaProducer struct {
 	producer sarama.SyncProducer
 }
 
-func Init() {
-	brokers := []string{"182.160.6.195:9094"}
+func Init(config config.Config) {
+	brokers := []string{config.Kafka.Host}
 	KfkProducer = NewKafkaProducer(brokers)
 }
 
