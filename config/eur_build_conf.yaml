@@ -1,5 +1,5 @@
 host: "182.160.6.195:9094"
 topic: "test_message_center"
 group: "ssp_test"
-offset: -2
+offset: -1
 
