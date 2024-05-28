@@ -10,7 +10,7 @@ var (
 	KfkProducer *KafkaProducer
 )
 
-// KafkaProducer 封装了 Kafka 生产者的功能
+// KafkaProducer 封装了 consume 生产者的功能
 type KafkaProducer struct {
 	producer sarama.SyncProducer
 }
@@ -20,7 +20,7 @@ func Init(config config.Config) {
 	KfkProducer = NewKafkaProducer(brokers)
 }
 
-// NewKafkaProducer 创建一个新的 Kafka 生产者
+// NewKafkaProducer 创建一个新的 consume 生产者
 func NewKafkaProducer(brokerList []string) *KafkaProducer {
 	config := sarama.NewConfig()
 	config.Producer.RequiredAcks = sarama.WaitForAll
@@ -53,9 +53,9 @@ func (kp *KafkaProducer) SendMessage(topic string, message []byte) error {
 	return nil
 }
 
-// Close 关闭 Kafka 生产者连接
+// Close 关闭 consume 生产者连接
 func (kp *KafkaProducer) Close() {
 	if err := kp.producer.Close(); err != nil {
-		log.Printf("Error closing Kafka producer: %v\n", err)
+		log.Printf("Error closing consume producer: %v\n", err)
 	}
 }

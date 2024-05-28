@@ -4,16 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/IBM/sarama"
+	"github.com/opensourceways/message-collect/config"
 )
 
-type ConsumeConfig struct {
-	Topic  string `yaml:"topic"`
-	HOST   string `yaml:"host"`
-	Group  string `yaml:"group"`
-	Offset int64  `yaml:"offset"`
-}
-
-func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
+func ConsumeGroup(cfg config.ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 	config := sarama.NewConfig()
 	config.Consumer.Offsets.Initial = cfg.Offset
 	config.Consumer.Return.Errors = true

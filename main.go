@@ -8,9 +8,12 @@ import (
 	"github.com/opensourceways/message-collect/manager"
 	"github.com/opensourceways/message-collect/plugin"
 	"github.com/opensourceways/message-collect/utils"
+	"github.com/opensourceways/server-common-lib/logrusutil"
 )
 
 func main() {
+	logrusutil.ComponentInit("message-push")
+
 	engine := gin.Default()
 	cfg := Init()
 	kafka.Init(*cfg)
