@@ -1,70 +1,35 @@
+/*
+Copyright (c) Huawei Technologies Co., Ltd. 2023. All rights reserved
+*/
+
+// Package kafka provides functionality for interacting with Kafka.
 package kafka
 
 import (
-	"github.com/IBM/sarama"
-	"log"
+	kfklib "github.com/opensourceways/kafka-lib/agent"
+	"github.com/opensourceways/kafka-lib/mq"
 )
 
-var (
-	KfkProducer *KafkaProducer
+const (
+	deaultVersion = "2.1.0"
 )
 
-// KafkaProducer 封装了 consume 生产者的功能
-type KafkaProducer struct {
-	producer sarama.SyncProducer
-}
+// Exit is an exported variable that provides the exit function for the Kafka package.
+var Exit = kfklib.Exit
 
-func Init(config *Config) {
-	brokers := []string{config.Address}
-	KfkProducer = NewKafkaProducer(brokers)
-}
-
+// Config represents the configuration for Kafka.
 type Config struct {
-	Address        string `json:"address" required:"true"`
-	Version        string `json:"version"` // e.g 2.1.0
-	MQCert         string `json:"mq_cert"`
-	Username       string `json:"user_name"`
-	Password       string `json:"password"`
-	Algorithm      string `json:"algorithm"`
-	SkipCertVerify bool   `json:"skip_cert_verify"`
+	kfklib.Config
 }
 
-// NewKafkaProducer 创建一个新的 consume 生产者
-func NewKafkaProducer(brokerList []string) *KafkaProducer {
-	config := sarama.NewConfig()
-	config.Producer.RequiredAcks = sarama.WaitForAll
-	config.Producer.Retry.Max = 5
-	config.Producer.Return.Successes = true
-
-	producer, err := sarama.NewSyncProducer(brokerList, config)
-	if err != nil {
-		return nil
-	}
-
-	return &KafkaProducer{
-		producer: producer,
+// SetDefault sets the default values for the Config.
+func (cfg *Config) SetDefault() {
+	if cfg.Version == "" {
+		cfg.Version = deaultVersion
 	}
 }
 
-// SendMessage 发送消息到指定的主题
-func (kp *KafkaProducer) SendMessage(topic string, message []byte) error {
-	// 创建要发送的消息
-	msg := &sarama.ProducerMessage{
-		Topic: topic,
-		Value: sarama.ByteEncoder(message),
-	}
-
-	// 发送消息并处理结果
-	_, _, err := kp.producer.SendMessage(msg)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-// Close 关闭 consume 生产者连接
-func (kp *KafkaProducer) Close() {
-	if err := kp.producer.Close(); err != nil {
-		log.Printf("Error closing consume producer: %v\n", err)
-	}
+// Init initializes the Kafka agent with the specified configuration, logger, and removeCfg flag.
+func Init(cfg *Config, log mq.Logger, removeCfg bool) error {
+	return kfklib.Init(&cfg.Config, log, nil, "", removeCfg)
 }

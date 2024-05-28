@@ -9,14 +9,19 @@ import (
 	"github.com/opensourceways/message-collect/plugin"
 	"github.com/opensourceways/message-collect/utils"
 	"github.com/opensourceways/server-common-lib/logrusutil"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
 	logrusutil.ComponentInit("message-push")
+	log := logrus.NewEntry(logrus.StandardLogger())
 
 	engine := gin.Default()
 	cfg := Init()
-	kafka.Init(&cfg.Kafka)
+	if err := kafka.Init(&cfg.Kafka, log, false); err != nil {
+		logrus.Errorf("init kafka failed, err:%s", err.Error())
+		return
+	}
 	manager.AddRoute(plugin.GiteeServerPlugin{Engine: engine})
 	go func() {
 		manager.StartConsume(plugin.EurBuildPlugin{})

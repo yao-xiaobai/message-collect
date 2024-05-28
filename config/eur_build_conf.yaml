@@ -1,8 +1,14 @@
 consume:
-  host: 182.160.6.195:9094
   topic: test_message_center
   group: message-collect
-  offset: -1
+  offset: -2
+  address: 182.160.6.195:9094
+  version: 2.3.0
+  mq_cert:
+  user_name:
+  password:
+  algorithm:
+  skip_cert_verify:
 publish : eur_build_raw
 
 

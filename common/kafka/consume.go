@@ -7,10 +7,10 @@ import (
 )
 
 type ConsumeConfig struct {
-	Topic  string `yaml:"topic"`
-	HOST   string `yaml:"host"`
-	Group  string `yaml:"group"`
-	Offset int64  `yaml:"offset"`
+	Topic   string `yaml:"topic"`
+	Address string `yaml:"address"`
+	Group   string `yaml:"group"`
+	Offset  int64  `yaml:"offset"`
 }
 
 func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
@@ -19,7 +19,7 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 	config.Consumer.Return.Errors = true
 
 	// 开始连接kafka服务器
-	group, err := sarama.NewConsumerGroup([]string{cfg.HOST}, cfg.Group, config)
+	group, err := sarama.NewConsumerGroup([]string{cfg.Address}, cfg.Group, config)
 
 	if err != nil {
 		fmt.Println("connect kafka failed; err", err)
