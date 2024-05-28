@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/opensourceways/message-collect/common/kafka"
 	"github.com/opensourceways/message-collect/utils"
 	"github.com/sirupsen/logrus"
 )
@@ -8,8 +9,8 @@ import (
 var EurBuildConfigInstance EurBuildConfig
 
 type EurBuildConfig struct {
-	Consume ConsumeConfig `yaml:"consume"`
-	Publish string        `yaml:"publish"`
+	Consume kafka.ConsumeConfig `yaml:"consume"`
+	Publish string              `yaml:"publish"`
 }
 
 func InitEurBuildConfig() {

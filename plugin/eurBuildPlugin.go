@@ -4,6 +4,7 @@ import (
 	"github.com/IBM/sarama"
 	"github.com/opensourceways/message-collect/common/kafka"
 	"github.com/opensourceways/message-collect/config"
+	"github.com/sirupsen/logrus"
 )
 
 type EurBuildPlugin struct {
@@ -29,6 +30,7 @@ func (h EurGroupHandler) ConsumeClaim(session sarama.ConsumerGroupSession, claim
 	for message := range claim.Messages() {
 		kafka.KfkProducer.SendMessage(config.EurBuildConfigInstance.Publish, message.Value)
 		session.MarkMessage(message, "")
+		logrus.Info("send eur build success")
 	}
 	return nil
 }

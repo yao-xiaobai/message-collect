@@ -2,7 +2,6 @@ package kafka
 
 import (
 	"github.com/IBM/sarama"
-	"github.com/opensourceways/message-collect/config"
 	"log"
 )
 
@@ -15,9 +14,19 @@ type KafkaProducer struct {
 	producer sarama.SyncProducer
 }
 
-func Init(config config.Config) {
-	brokers := []string{config.Kafka.Host}
+func Init(config *Config) {
+	brokers := []string{config.Address}
 	KfkProducer = NewKafkaProducer(brokers)
+}
+
+type Config struct {
+	Address        string `json:"address" required:"true"`
+	Version        string `json:"version"` // e.g 2.1.0
+	MQCert         string `json:"mq_cert"`
+	Username       string `json:"user_name"`
+	Password       string `json:"password"`
+	Algorithm      string `json:"algorithm"`
+	SkipCertVerify bool   `json:"skip_cert_verify"`
 }
 
 // NewKafkaProducer 创建一个新的 consume 生产者

@@ -16,7 +16,7 @@ func main() {
 
 	engine := gin.Default()
 	cfg := Init()
-	kafka.Init(*cfg)
+	kafka.Init(&cfg.Kafka)
 	manager.AddRoute(plugin.GiteeServerPlugin{Engine: engine})
 	go func() {
 		manager.StartConsume(plugin.EurBuildPlugin{})
