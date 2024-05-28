@@ -11,5 +11,4 @@ FROM openeuler/openeuler:22.03
 
 COPY --from=BUILDER /go/src/github.com/opensourceways/message-collect /opt/app
 WORKDIR /opt/app/
-EXPOSE 8081
 ENTRYPOINT ["/opt/app/message-collect"]

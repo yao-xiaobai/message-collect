@@ -6,4 +6,3 @@ kafka:
   password: $t@D2awGMtpDvKJH
   algorithm: sha512
   skip_cert_verify: true
-port: 8081
