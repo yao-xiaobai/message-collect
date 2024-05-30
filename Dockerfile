@@ -11,7 +11,12 @@ RUN cd /go/src/github.com/opensourceways/message-collect && CGO_ENABLED=1 go bui
 
 # copy binary config and utils
 FROM openeuler/openeuler:22.03
+RUN dnf -y update && \
+    dnf in -y shadow && \
+    groupadd -g 1000 message-center && \
+    useradd -u 1000 -g message-center -s /bin/bash -m message-center
 
-COPY --from=BUILDER /go/src/github.com/opensourceways/message-collect /opt/app
+USER message-center
+COPY  --chown=message-center --from=BUILDER /go/src/github.com/opensourceways/message-collect /opt/app
 WORKDIR /opt/app/
 ENTRYPOINT ["/opt/app/message-collect"]
