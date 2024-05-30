@@ -3,6 +3,6 @@ kafka:
   version: 2.7.0
   mq_cert: secrets/kafka/phy_ca.crt
   user_name: kafka-test
-  password: $t@D2awGMtpDvKJH
+  password:
   algorithm: sha512
   skip_cert_verify: true
