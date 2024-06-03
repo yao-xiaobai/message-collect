@@ -8,6 +8,7 @@ import (
 	"github.com/opensourceways/message-collect/utils"
 	"github.com/opensourceways/server-common-lib/logrusutil"
 	"github.com/sirupsen/logrus"
+	"os"
 )
 
 func main() {
@@ -27,6 +28,7 @@ func main() {
 
 func Init() *config.Config {
 	cfg := new(config.Config)
+	logrus.Info(os.Args[1:])
 	if err := utils.LoadFromYaml("/vault/secrets/conf.yaml", cfg); err != nil {
 		logrus.Error("Config初始化失败, err:", err)
 		return nil
