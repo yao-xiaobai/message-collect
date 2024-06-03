@@ -27,7 +27,7 @@ func main() {
 
 func Init() *config.Config {
 	cfg := new(config.Config)
-	if err := utils.LoadFromYaml("config/conf.yaml", cfg); err != nil {
+	if err := utils.LoadFromYaml("/vault/secrets/conf.yaml", cfg); err != nil {
 		logrus.Error("Config初始化失败, err:", err)
 		return nil
 	}

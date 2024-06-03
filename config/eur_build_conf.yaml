@@ -9,6 +9,6 @@ consume:
   password:
   algorithm:
   skip_cert_verify:
-publish : eur_build_raw
+publish: eur_build_raw
 
 

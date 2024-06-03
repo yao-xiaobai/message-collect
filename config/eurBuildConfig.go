@@ -15,7 +15,7 @@ type EurBuildConfig struct {
 
 func InitEurBuildConfig() {
 	cfg := new(EurBuildConfig)
-	if err := utils.LoadFromYaml("config/eur_build_conf.yaml", cfg); err != nil {
+	if err := utils.LoadFromYaml("/vault/secrets/eur_build_conf.yaml", cfg); err != nil {
 		logrus.Error("Config初始化失败, err:", err)
 		return
 	}
