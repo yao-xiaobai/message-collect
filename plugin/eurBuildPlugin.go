@@ -26,6 +26,11 @@ func (h EurGroupHandler) Cleanup(_ sarama.ConsumerGroupSession) error {
 	return nil
 }
 
+/*
+*
+
+	接受到kafka消息，直接转发到另外一个kafka
+*/
 func (h EurGroupHandler) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.ConsumerGroupClaim) error {
 	for message := range claim.Messages() {
 		err := kfklib.Publish(config.EurBuildConfigInstance.Publish, nil, message.Value)

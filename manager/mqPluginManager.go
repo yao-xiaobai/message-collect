@@ -1,3 +1,7 @@
+/**
+消费mq的采集插件管理器
+*/
+
 package manager
 
 import (

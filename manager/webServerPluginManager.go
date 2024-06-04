@@ -1,3 +1,7 @@
+/**
+api插件管理器
+*/
+
 package manager
 
 import (

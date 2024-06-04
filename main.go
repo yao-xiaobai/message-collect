@@ -46,6 +46,9 @@ func Init() *config.Config {
 	return cfg
 }
 
+/*
+获取启动参数，配置文件地址由启动参数传入
+*/
 func gatherOptions(fs *flag.FlagSet, args ...string) (Options, error) {
 	var o Options
 	o.AddFlags(fs)
