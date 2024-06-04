@@ -12,7 +12,6 @@ type EurBuildPlugin struct {
 }
 
 func (p EurBuildPlugin) StartConsume() {
-	config.InitEurBuildConfig()
 	h := EurGroupHandler{}
 	kafka.ConsumeGroup(config.EurBuildConfigInstance.Consume, &h)
 }
