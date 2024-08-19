@@ -12,17 +12,39 @@ import (
 	"os"
 )
 
+type OpenEulerMeetingRaw struct {
+	Action string `json:"action"`
+	Msg    struct {
+		Topic     string      `json:"topic"`
+		Platform  interface{} `json:"platform"`
+		Sponsor   string      `json:"sponsor"`
+		GroupName string      `json:"group_name"`
+		GroupId   interface{} `json:"group_id"`
+		Date      string      `json:"date"`
+		Start     string      `json:"start"`
+		End       string      `json:"end"`
+		Etherpad  string      `json:"etherpad"`
+		Agenda    string      `json:"agenda"`
+		EmailList string      `json:"emaillist"`
+		Record    string      `json:"record"`
+		JoinUrl   string      `json:"join_url"`
+	} `json:"msg"`
+}
+
 func main() {
 	logrusutil.ComponentInit("message-collect")
 	log := logrus.NewEntry(logrus.StandardLogger())
 	cfg := Init()
-	logrus.Info("start init kafka,address=" + cfg.Kafka.Address)
 	if err := kafka.Init(&cfg.Kafka, log, false); err != nil {
 		logrus.Errorf("init kafka failed, err:%s", err.Error())
 		return
 	}
 	go func() {
 		manager.StartConsume(plugin.EurBuildPlugin{})
+	}()
+
+	go func() {
+		manager.StartConsume(plugin.OpenEulerMeetingPlugin{})
 	}()
 	select {}
 }
@@ -43,6 +65,7 @@ func Init() *config.Config {
 		return nil
 	}
 	config.InitEurBuildConfig(o.EurBuildConfig)
+	config.InitOpenEulerMeetingConfig(o.MeetingConfig)
 	return cfg
 }
 
@@ -60,9 +83,12 @@ func gatherOptions(fs *flag.FlagSet, args ...string) (Options, error) {
 type Options struct {
 	Config         string
 	EurBuildConfig string
+	MeetingConfig  string
 }
 
 func (o *Options) AddFlags(fs *flag.FlagSet) {
 	fs.StringVar(&o.Config, "config-file", "", "Path to config file.")
 	fs.StringVar(&o.EurBuildConfig, "eur-build-config-file", "", "Path to eur-build config file.")
+	fs.StringVar(&o.MeetingConfig, "meeting-config-file", "", "Path to meeting config file.")
+
 }

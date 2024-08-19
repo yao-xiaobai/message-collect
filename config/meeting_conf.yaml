@@ -1,0 +1,12 @@
+consume:
+  topic: openeuler-app-meeting-server-test
+  group: message-collect
+  offset: -2
+  address:
+  version: 2.3.0
+  mq_cert:
+  user_name:
+  password:
+  algorithm:
+  skip_cert_verify:
+publish: openEuler_meeting_raw
