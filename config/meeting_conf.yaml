@@ -2,7 +2,7 @@ consume:
   topic: openeuler-app-meeting-server-test
   group: message-collect
   offset: -2
-  address:
+  address: 182.160.6.195:9094
   version: 2.3.0
   mq_cert:
   user_name:
