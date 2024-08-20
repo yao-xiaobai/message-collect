@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/IBM/sarama"
+	"strings"
 )
 
 type ConsumeConfig struct {
@@ -19,7 +20,7 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 	config.Consumer.Return.Errors = true
 
 	// 开始连接kafka服务器
-	group, err := sarama.NewConsumerGroup([]string{cfg.Address}, cfg.Group, config)
+	group, err := sarama.NewConsumerGroup(strings.Split(cfg.Address, ","), cfg.Group, config)
 
 	if err != nil {
 		fmt.Println("connect kafka failed; err", err)
