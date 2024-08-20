@@ -20,4 +20,5 @@ func InitEurBuildConfig(configFile string) {
 		return
 	}
 	EurBuildConfigInstance = *cfg
+	logrus.Info(OpenEulerMeetingConfigInstance)
 }
