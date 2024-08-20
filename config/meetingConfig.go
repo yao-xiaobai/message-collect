@@ -20,5 +20,4 @@ func InitOpenEulerMeetingConfig(configFile string) {
 		return
 	}
 	OpenEulerMeetingConfigInstance = *cfg
-	logrus.Info(OpenEulerMeetingConfigInstance)
 }
