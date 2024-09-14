@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"encoding/json"
+
 	"github.com/IBM/sarama"
 	kfklib "github.com/opensourceways/kafka-lib/agent"
 	"github.com/opensourceways/message-collect/common/kafka"
@@ -42,6 +43,7 @@ func (h EurGroupHandler) ConsumeClaim(session sarama.ConsumerGroupSession, claim
 		if msgBodyErr != nil {
 			return msgBodyErr
 		}
+		logrus.Errorf("the topid is %v,  the pkg is %v", raw.Topic, raw.Body.Pkg)
 		if (raw.Topic == start_topic || raw.Topic == end_topic) && raw.Body.Pkg != nil {
 			err := kfklib.Publish(config.EurBuildConfigInstance.Publish, nil, message.Value)
 			if err != nil {
