@@ -43,7 +43,7 @@ func (h EurGroupHandler) ConsumeClaim(session sarama.ConsumerGroupSession, claim
 		if msgBodyErr != nil {
 			return msgBodyErr
 		}
-		logrus.Errorf("the condition is %v", (raw.Topic == start_topic || raw.Topic == end_topic) && raw.Body.Pkg != nil)
+		logrus.Error(raw.Topic == start_topic, raw.Topic == end_topic, raw.Body.Pkg != nil)
 		if (raw.Topic == start_topic || raw.Topic == end_topic) && raw.Body.Pkg != nil {
 			err := kfklib.Publish(config.EurBuildConfigInstance.Publish, nil, message.Value)
 			if err != nil {
