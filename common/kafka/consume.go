@@ -35,6 +35,7 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 
 		config.Net.TLS.Enable = true
 		tlsConfig := &tls.Config{}
+		cfg.Cert = "/vault/secrets/kafka.crt"
 		if cfg.Cert != "" {
 			caCert, err := ioutil.ReadFile(cfg.Cert)
 			if err != nil {
