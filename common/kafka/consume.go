@@ -26,27 +26,27 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 	config := sarama.NewConfig()
 	config.Consumer.Offsets.Initial = cfg.Offset
 	config.Consumer.Return.Errors = true
+	if cfg.UserName != "" {
+		config.Net.SASL.Enable = true
+		config.Net.SASL.User = cfg.UserName
+		config.Net.SASL.Password = cfg.Password
+		config.Net.SASL.Mechanism = sarama.SASLTypeSCRAMSHA512
 
-	config.Net.SASL.Enable = true
-	config.Net.SASL.User = cfg.UserName
-	config.Net.SASL.Password = cfg.Password
-	config.Net.SASL.Mechanism = sarama.SASLTypeSCRAMSHA512
+		config.Net.TLS.Enable = true
+		tlsConfig := &tls.Config{}
 
-	config.Net.TLS.Enable = true
-	tlsConfig := &tls.Config{}
-
-	if cfg.MqCert != "" {
-		caCert, err := ioutil.ReadFile(cfg.MqCert)
-		if err != nil {
-			logrus.Errorf("无法加载证书, %v", err)
-			return
+		if cfg.MqCert != "" {
+			caCert, err := ioutil.ReadFile(cfg.MqCert)
+			if err != nil {
+				logrus.Errorf("无法加载证书, %v", err)
+				return
+			}
+			caCertPool := x509.NewCertPool()
+			caCertPool.AppendCertsFromPEM(caCert)
+			tlsConfig.RootCAs = caCertPool
 		}
-		caCertPool := x509.NewCertPool()
-		caCertPool.AppendCertsFromPEM(caCert)
-		tlsConfig.RootCAs = caCertPool
+		config.Net.TLS.Config = tlsConfig
 	}
-	config.Net.TLS.Config = tlsConfig
-
 	// 开始连接kafka服务器
 	group, err := sarama.NewConsumerGroup(strings.Split(cfg.Address, ","), cfg.Group, config)
 
