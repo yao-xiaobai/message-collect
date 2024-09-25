@@ -14,12 +14,12 @@ import (
 
 type ConsumeConfig struct {
 	Topic    string `yaml:"topic"`
+	Cert     string `yaml:"mq_cert"`
 	Address  string `yaml:"address"`
 	Group    string `yaml:"group"`
 	Offset   int64  `yaml:"offset"`
 	UserName string `yaml:"user_name"`
 	Password string `yaml:"password"`
-	Cert     string `yaml:"mq_cert"`
 }
 
 func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
@@ -35,7 +35,6 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 
 		config.Net.TLS.Enable = true
 		tlsConfig := &tls.Config{}
-		cfg.Cert = "/vault/secrets/kafka.crt"
 		if cfg.Cert != "" {
 			caCert, err := ioutil.ReadFile(cfg.Cert)
 			if err != nil {
