@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"encoding/json"
+	"time"
 
 	"github.com/IBM/sarama"
 	kfklib "github.com/opensourceways/kafka-lib/agent"
@@ -45,6 +46,7 @@ func (h EurGroupHandler) ConsumeClaim(session sarama.ConsumerGroupSession, claim
 		}
 		logrus.Error(raw.Body.Pkg, raw.Body.Pkg == nil)
 		if (raw.Topic == start_topic || raw.Topic == end_topic) && raw.Body.Pkg != nil {
+			raw.Time = time.Now()
 			err := kfklib.Publish(config.EurBuildConfigInstance.Publish, nil, message.Value)
 			if err != nil {
 				logrus.Error(err)
@@ -79,6 +81,7 @@ type EurBuildMessageRaw struct {
 		OpenEulerMessagingSchema string `json:"openEuler_messaging_schema"`
 		SentAt                   string `json:"sent-at"`
 	} `json:"headers"`
-	ID    string `json:"id"`
-	Topic string `json:"topic"`
+	ID    string    `json:"id"`
+	Topic string    `json:"topic"`
+	Time  time.Time `json:"time"`
 }
