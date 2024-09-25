@@ -15,7 +15,6 @@ type EurBuildConfig struct {
 
 func InitEurBuildConfig(configFile string) {
 	cfg := new(EurBuildConfig)
-	logrus.Info(configFile)
 	if err := utils.LoadFromYaml(configFile, cfg); err != nil {
 		logrus.Error("Config初始化失败, err:", err)
 		return
