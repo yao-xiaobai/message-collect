@@ -27,6 +27,7 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 	config := sarama.NewConfig()
 	config.Consumer.Offsets.Initial = cfg.Offset
 	config.Consumer.Return.Errors = true
+	logrus.Infof("the cert is %v", cfg.MqCert)
 	if cfg.UserName != "" && cfg.Password != "" {
 		config.Net.SASL.Enable = true
 		config.Net.SASL.User = cfg.UserName
@@ -42,7 +43,6 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 				logrus.Errorf("无法加载证书, %v", err)
 				return
 			}
-			logrus.Infof("cert is %v", caCert)
 			caCertPool := x509.NewCertPool()
 			if ok := caCertPool.AppendCertsFromPEM(caCert); !ok {
 				logrus.Errorf("无法解析 CA 证书")
