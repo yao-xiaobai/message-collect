@@ -19,7 +19,7 @@ type ConsumeConfig struct {
 	Offset   int64  `yaml:"offset"`
 	UserName string `yaml:"user_name"`
 	Password string `yaml:"password"`
-	MqCert   string `yaml:"mq_cert"`
+	Cert     string `yaml:"mq_cert"`
 }
 
 func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
@@ -27,7 +27,6 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 	config := sarama.NewConfig()
 	config.Consumer.Offsets.Initial = cfg.Offset
 	config.Consumer.Return.Errors = true
-	logrus.Infof("the cert is %v", cfg.MqCert)
 	if cfg.UserName != "" && cfg.Password != "" {
 		config.Net.SASL.Enable = true
 		config.Net.SASL.User = cfg.UserName
@@ -37,8 +36,8 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 		config.Net.TLS.Enable = true
 		tlsConfig := &tls.Config{}
 
-		if cfg.MqCert != "" {
-			caCert, err := ioutil.ReadFile(cfg.MqCert)
+		if cfg.Cert != "" {
+			caCert, err := ioutil.ReadFile(cfg.Cert)
 			if err != nil {
 				logrus.Errorf("无法加载证书, %v", err)
 				return
