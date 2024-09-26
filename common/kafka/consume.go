@@ -25,10 +25,10 @@ type ConsumeConfig struct {
 }
 
 func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
-	logrus.Info(cfg)
 	config := sarama.NewConfig()
 	config.Consumer.Offsets.Initial = cfg.Offset
 	config.Consumer.Return.Errors = true
+	logrus.Infof("the user and pwd is %v, %v", cfg.UserName, cfg.Password)
 	if cfg.UserName != "" && cfg.Password != "" {
 		config.Net.SASL.Enable = true
 		config.Net.SASL.User = cfg.UserName
