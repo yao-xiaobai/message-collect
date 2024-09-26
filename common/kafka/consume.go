@@ -2,10 +2,7 @@ package kafka
 
 import (
 	"context"
-	"crypto/tls"
-	"crypto/x509"
 	"fmt"
-	"io/ioutil"
 	"strings"
 
 	"github.com/IBM/sarama"
@@ -32,21 +29,6 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 		config.Net.SASL.User = cfg.UserName
 		config.Net.SASL.Password = cfg.Password
 		config.Net.SASL.Mechanism = sarama.SASLTypeSCRAMSHA512
-
-		config.Net.TLS.Enable = true
-		tlsConfig := &tls.Config{}
-		caCert, err := ioutil.ReadFile("/vault/secrets/kafka.crt")
-		if err != nil {
-			logrus.Errorf("无法加载证书, %v", err)
-			return
-		}
-		caCertPool := x509.NewCertPool()
-		if ok := caCertPool.AppendCertsFromPEM(caCert); !ok {
-			logrus.Errorf("无法解析 CA 证书")
-			return
-		}
-		tlsConfig.RootCAs = caCertPool
-		config.Net.TLS.Config = tlsConfig
 	}
 	// 开始连接kafka服务器
 	group, err := sarama.NewConsumerGroup(strings.Split(cfg.Address, ","), cfg.Group, config)
