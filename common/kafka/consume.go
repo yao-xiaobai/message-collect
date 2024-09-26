@@ -35,8 +35,8 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 
 		config.Net.TLS.Enable = true
 		tlsConfig := &tls.Config{}
-		if cfg.Cert != "" {
-			caCert, err := ioutil.ReadFile(cfg.Cert)
+		if cfg.MqCert != "" {
+			caCert, err := ioutil.ReadFile(cfg.MqCert)
 			if err != nil {
 				logrus.Errorf("无法加载证书, %v", err)
 				return
