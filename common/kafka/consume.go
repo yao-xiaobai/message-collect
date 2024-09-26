@@ -2,6 +2,7 @@ package kafka
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"strings"
 
@@ -31,6 +32,9 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 		config.Net.SASL.SCRAMClientGeneratorFunc = func() sarama.SCRAMClient {
 			return &kafka.XDGSCRAMClient{}
 		}
+		config.Net.TLS.Enable = true
+		tlsConfig := &tls.Config{InsecureSkipVerify: true}
+		config.Net.TLS.Config = tlsConfig
 	}
 	// 开始连接kafka服务器
 	group, err := sarama.NewConsumerGroup(strings.Split(cfg.Address, ","), cfg.Group, config)
