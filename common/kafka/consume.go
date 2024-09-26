@@ -3,11 +3,13 @@ package kafka
 import (
 	"context"
 	"crypto/tls"
+	"crypto/x509"
 	"fmt"
+	"io/ioutil"
 	"strings"
 
 	"github.com/IBM/sarama"
-	"github.com/opensourceways/kafka-lib/kafka"
+	"github.com/sirupsen/logrus"
 )
 
 type ConsumeConfig struct {
@@ -29,11 +31,22 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 		config.Net.SASL.User = cfg.UserName
 		config.Net.SASL.Password = cfg.Password
 		config.Net.SASL.Mechanism = sarama.SASLTypeSCRAMSHA512
-		config.Net.SASL.SCRAMClientGeneratorFunc = func() sarama.SCRAMClient {
-			return &kafka.XDGSCRAMClient{}
-		}
+
 		config.Net.TLS.Enable = true
-		tlsConfig := &tls.Config{InsecureSkipVerify: true}
+		tlsConfig := &tls.Config{}
+		if cfg.MqCert != "" {
+			caCert, err := ioutil.ReadFile(cfg.MqCert)
+			if err != nil {
+				logrus.Errorf("无法加载证书, %v", err)
+				return
+			}
+			caCertPool := x509.NewCertPool()
+			if ok := caCertPool.AppendCertsFromPEM(caCert); !ok {
+				logrus.Errorf("无法解析 CA 证书")
+				return
+			}
+			tlsConfig.RootCAs = caCertPool
+		}
 		config.Net.TLS.Config = tlsConfig
 	}
 	// 开始连接kafka服务器
