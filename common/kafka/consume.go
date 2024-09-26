@@ -2,7 +2,12 @@ package kafka
 
 import (
 	"context"
+	"crypto/tls"
+	"crypto/x509"
 	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
 	"strings"
 
 	"github.com/IBM/sarama"
@@ -29,6 +34,34 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 		config.Net.SASL.User = cfg.UserName
 		config.Net.SASL.Password = cfg.Password
 		config.Net.SASL.Mechanism = sarama.SASLTypeSCRAMSHA512
+
+		config.Net.TLS.Enable = true
+		tlsConfig := &tls.Config{}
+
+		certFilePath := "/vault/secrets/kafka.crt"
+		if _, err := os.Stat(certFilePath); os.IsNotExist(err) {
+			log.Fatalf("文件不存在: %s", certFilePath)
+		}
+		content, err := ioutil.ReadFile(certFilePath)
+		if err != nil {
+			log.Fatalf("读取文件失败: %v", err)
+		}
+		fmt.Printf("文件内容:\n%s\n", content)
+
+		if cfg.MqCert != "" {
+			caCert, err := ioutil.ReadFile(cfg.MqCert)
+			if err != nil {
+				logrus.Errorf("无法加载证书, %v", err)
+				return
+			}
+			caCertPool := x509.NewCertPool()
+			if ok := caCertPool.AppendCertsFromPEM(caCert); !ok {
+				logrus.Errorf("无法解析 CA 证书")
+				return
+			}
+			tlsConfig.RootCAs = caCertPool
+		}
+		config.Net.TLS.Config = tlsConfig
 	}
 	// 开始连接kafka服务器
 	group, err := sarama.NewConsumerGroup(strings.Split(cfg.Address, ","), cfg.Group, config)
