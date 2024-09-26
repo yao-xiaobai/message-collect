@@ -14,7 +14,7 @@ import (
 
 type ConsumeConfig struct {
 	Topic    string `yaml:"topic"`
-	Cert     string `yaml:"mq_cert"`
+	MqCert   string `yaml:"mq_cert"`
 	Address  string `yaml:"address"`
 	Group    string `yaml:"group"`
 	Offset   int64  `yaml:"offset"`
