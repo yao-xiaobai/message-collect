@@ -33,7 +33,7 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 		config.Net.SASL.Mechanism = sarama.SASLTypePlaintext
 
 		config.Net.TLS.Enable = true
-		tlsConfig := &tls.Config{}
+		tlsConfig := &tls.Config{InsecureSkipVerify: true}
 		if cfg.MqCert != "" {
 			caCert, err := ioutil.ReadFile(cfg.MqCert)
 			if err != nil {
