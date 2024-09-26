@@ -2,14 +2,11 @@ package kafka
 
 import (
 	"context"
-	"crypto/tls"
-	"crypto/x509"
 	"fmt"
-	"io/ioutil"
 	"strings"
 
 	"github.com/IBM/sarama"
-	"github.com/sirupsen/logrus"
+	"github.com/opensourceways/kafka-lib/kafka"
 )
 
 type ConsumeConfig struct {
@@ -22,29 +19,6 @@ type ConsumeConfig struct {
 	Password string `yaml:"password"`
 }
 
-type ScramClient struct {
-	username string
-	password string
-	nonce    string
-}
-
-func (s *ScramClient) Begin(userName, password, authzID string) error {
-	s.username = userName
-	s.password = password
-	s.nonce = "random_nonce" // 生成随机的 nonce
-	return nil
-}
-
-func (s *ScramClient) Step(challenge string) (string, error) {
-	// 处理挑战并生成响应
-	response := fmt.Sprintf("n=%s,r=%s", s.username, s.nonce)
-	return response, nil
-}
-
-func (s *ScramClient) Done() bool {
-	return false // 表示认证未完成
-}
-
 func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 	config := sarama.NewConfig()
 	config.Consumer.Offsets.Initial = cfg.Offset
@@ -55,24 +29,8 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 		config.Net.SASL.Password = cfg.Password
 		config.Net.SASL.Mechanism = sarama.SASLTypeSCRAMSHA512
 		config.Net.SASL.SCRAMClientGeneratorFunc = func() sarama.SCRAMClient {
-			return &ScramClient{}
+			return &kafka.XDGSCRAMClient{}
 		}
-		config.Net.TLS.Enable = true
-		tlsConfig := &tls.Config{}
-		if cfg.MqCert != "" {
-			caCert, err := ioutil.ReadFile(cfg.MqCert)
-			if err != nil {
-				logrus.Errorf("无法加载证书, %v", err)
-				return
-			}
-			caCertPool := x509.NewCertPool()
-			if ok := caCertPool.AppendCertsFromPEM(caCert); !ok {
-				logrus.Errorf("无法解析 CA 证书")
-				return
-			}
-			tlsConfig.RootCAs = caCertPool
-		}
-		config.Net.TLS.Config = tlsConfig
 	}
 	// 开始连接kafka服务器
 	group, err := sarama.NewConsumerGroup(strings.Split(cfg.Address, ","), cfg.Group, config)
