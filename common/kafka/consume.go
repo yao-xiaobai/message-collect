@@ -6,8 +6,6 @@ import (
 	"crypto/x509"
 	"fmt"
 	"io/ioutil"
-	"log"
-	"os"
 	"strings"
 
 	"github.com/IBM/sarama"
@@ -16,11 +14,11 @@ import (
 
 type ConsumeConfig struct {
 	Topic    string `yaml:"topic"`
-	MqCert   string `yaml:"mq_cert"`
+	MqCert   string `yaml:"mqcert"`
 	Address  string `yaml:"address"`
 	Group    string `yaml:"group"`
 	Offset   int64  `yaml:"offset"`
-	UserName string `yaml:"user_name"`
+	UserName string `yaml:"username"`
 	Password string `yaml:"password"`
 }
 
@@ -28,7 +26,6 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 	config := sarama.NewConfig()
 	config.Consumer.Offsets.Initial = cfg.Offset
 	config.Consumer.Return.Errors = true
-	logrus.Infof("the user and pwd is %v, %v", cfg.UserName, cfg.Password)
 	if cfg.UserName != "" && cfg.Password != "" {
 		config.Net.SASL.Enable = true
 		config.Net.SASL.User = cfg.UserName
@@ -37,17 +34,6 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 
 		config.Net.TLS.Enable = true
 		tlsConfig := &tls.Config{}
-
-		certFilePath := "/vault/secrets/kafka.crt"
-		if _, err := os.Stat(certFilePath); os.IsNotExist(err) {
-			log.Fatalf("文件不存在: %s", certFilePath)
-		}
-		content, err := ioutil.ReadFile(certFilePath)
-		if err != nil {
-			log.Fatalf("读取文件失败: %v", err)
-		}
-		fmt.Printf("文件内容:\n%s\n", content)
-
 		if cfg.MqCert != "" {
 			caCert, err := ioutil.ReadFile(cfg.MqCert)
 			if err != nil {
