@@ -30,7 +30,7 @@ func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 		config.Net.SASL.Enable = true
 		config.Net.SASL.User = cfg.UserName
 		config.Net.SASL.Password = cfg.Password
-		config.Net.SASL.Mechanism = sarama.SASLTypeSCRAMSHA512
+		config.Net.SASL.Mechanism = sarama.SASLTypePlaintext
 
 		config.Net.TLS.Enable = true
 		tlsConfig := &tls.Config{}
