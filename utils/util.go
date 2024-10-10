@@ -27,7 +27,6 @@ func LoadFromYaml(path string, cfg interface{}) error {
 	if err != nil {
 		return err
 	}
-
 	return yaml.Unmarshal(b, cfg)
 }
 

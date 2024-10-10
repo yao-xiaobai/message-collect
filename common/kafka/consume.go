@@ -2,23 +2,53 @@ package kafka
 
 import (
 	"context"
+	"crypto/tls"
+	"crypto/x509"
 	"fmt"
-	"github.com/IBM/sarama"
+	"io/ioutil"
 	"strings"
+
+	"github.com/IBM/sarama"
+	"github.com/sirupsen/logrus"
 )
 
 type ConsumeConfig struct {
-	Topic   string `yaml:"topic"`
-	Address string `yaml:"address"`
-	Group   string `yaml:"group"`
-	Offset  int64  `yaml:"offset"`
+	Topic    string `yaml:"topic"`
+	MqCert   string `yaml:"mqcert"`
+	Address  string `yaml:"address"`
+	Group    string `yaml:"group"`
+	Offset   int64  `yaml:"offset"`
+	UserName string `yaml:"username"`
+	Password string `yaml:"password"`
 }
 
 func ConsumeGroup(cfg ConsumeConfig, handler sarama.ConsumerGroupHandler) {
 	config := sarama.NewConfig()
 	config.Consumer.Offsets.Initial = cfg.Offset
 	config.Consumer.Return.Errors = true
+	if cfg.UserName != "" && cfg.Password != "" {
+		config.Net.SASL.Enable = true
+		config.Net.SASL.User = cfg.UserName
+		config.Net.SASL.Password = cfg.Password
+		config.Net.SASL.Mechanism = sarama.SASLTypePlaintext
 
+		config.Net.TLS.Enable = true
+		tlsConfig := &tls.Config{InsecureSkipVerify: true}
+		if cfg.MqCert != "" {
+			caCert, err := ioutil.ReadFile(cfg.MqCert)
+			if err != nil {
+				logrus.Errorf("无法加载证书, %v", err)
+				return
+			}
+			caCertPool := x509.NewCertPool()
+			if ok := caCertPool.AppendCertsFromPEM(caCert); !ok {
+				logrus.Errorf("无法解析 CA 证书")
+				return
+			}
+			tlsConfig.RootCAs = caCertPool
+		}
+		config.Net.TLS.Config = tlsConfig
+	}
 	// 开始连接kafka服务器
 	group, err := sarama.NewConsumerGroup(strings.Split(cfg.Address, ","), cfg.Group, config)
 
