@@ -81,6 +81,7 @@ func PublishMeeting() {
 	}
 }
 
+
 func PublishCVE() {
 
 	message := `
